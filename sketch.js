@@ -12,6 +12,7 @@ let font
 let instructions
 let debugCorner /* output debug text in the bottom left corner of the canvas */
 
+let grid /* 4x4 game grid for 2048 */
 
 function preload() {
     font = loadFont('data/consola.ttf')
@@ -26,8 +27,7 @@ function setup() {
 
     /* initialize instruction div */
     instructions = select('#ins')
-    instructions.html(`<pre>
-        numpad 1 → freeze sketch</pre>`)
+    instructions.html(`<pre>🥝 2️⃣0️⃣4️⃣8️⃣ → [num1] freeze sketch</pre>`)
 
     debugCorner = new CanvasDebugCorner(5)
 }
@@ -50,8 +50,7 @@ function keyPressed() {
     /* stop sketch */
     if (keyCode === 97) { /* numpad 1 */
         noLoop()
-        instructions.html(`<pre>
-            sketch stopped</pre>`)
+        instructions.html(`<pre>🥝 2️⃣0️⃣4️⃣8️⃣ → sketch stopped</pre>`)
     }
 }
 
