@@ -73,10 +73,18 @@ class Gameboard {
             {"i": 2, "arr": [0, 2, 0, 0], "ans": 1},
         ]
 
-        for (const test of testTuples) {
-            console.assert(this.getConsecutiveZeroesToTheRight(
-                int(test['i']),
-                test['arr']) === int(test['ans']))
+        for (const i in testTuples) {
+            const test = testTuples[i]
+            const index = int(test['i'])
+            const testCase = test['arr']
+            const expectedResult = test['ans']
+            const zeroesResult = this.getConsecutiveZeroesToTheRight(index, testCase)
+
+            if (PRINT_TESTS) {
+                console.log(`${i.padStart(3, '0')}.zeroes🥝 [${testCase}]→[${expectedResult}] ?= [${zeroesResult}]`)
+            }
+
+            console.assert(zeroesResult === expectedResult)
         }
     }
 
@@ -84,23 +92,24 @@ class Gameboard {
      *  @arr: the 4-cell array we're performing a 'slide right' command on
      *  @return: a new 4 cell array after performing 'slide right'
      */
-    slideRight(arr) {
+    #slideRight(arr) {
         let result = [...arr] /* idiom for array.copy() */
         /* iterate through indices {2, 1, 0} in our 4-cell array */
         for (let i=result.length-2; i>=0; i--) {
             const zeroes = this.getConsecutiveZeroesToTheRight(i, result)
             // console.log(zeroes)
             if (zeroes >= 0) {
-                result = this.#swapIndices(i, i+zeroes, result)
+                result = this.#swapCells(i, i+zeroes, result)
             }
         }
 
         return result
     }
 
-    /** returns new array with indices x and y swapped
+    /** returns new array with values at indices x and y swapped from the
+        original
      */
-    #swapIndices(x, y, arr) {
+    #swapCells(x, y, arr) {
         const result = [...arr] /* idiom for array.copy() */
 
         const tmp = result[x]
@@ -137,17 +146,16 @@ class Gameboard {
 
             const testCase = test['arr']
             const expectedResult = test['ans']
-            const slideResult = this.slideRight(testCase)
+            const slideResult = this.#slideRight(testCase)
 
             if (PRINT_TESTS) {
-                console.log(`${i}: [ slide→ ] ${testCase} → ${expectedResult} = ${slideResult}`)
+                console.log(`${i.padStart(3, '0')}.slide→🌊 [${testCase}]→[${expectedResult}] ?= [${slideResult}]`)
             }
 
             console.assert(
                 this.#arrayEquals(slideResult, expectedResult)
             )
         }
-
     }
 
     /* simple array equality, assuming primitive values */
@@ -157,12 +165,53 @@ class Gameboard {
             a.every((value, index) => value === b[index]);
     }
 
-    /** input: a 4 cell array
-        @return: a new 4 cell array, combining all adjacent cells of equal value
+    /**
+        @return: a new 4 cell array, combining all adjacent cells of equal
+     value in the input array
      */
-    combineAdjacentCells() {}
+    #combineAdjacentCells(row) {
+        let result = [...row] /* idiom for array.copy() */
+        /* iterate through indices {2, 1, 0} in our 4-cell array */
+        for (let i=result.length-2; i>=0; i--) {
+            if (result[i] === result[i+1]) { /* works for the 0 case */
+                result[i+1] *= 2
+                result[i] = 0
+            }
+        }
+        return result
+    }
 
+    runCombineAdjacentTests() {
+        const testTuples = [
+            {'arr': [0, 0, 0, 0], 'ans': [0, 0, 0, 0]},
 
+            /* basic single cell combines */
+            {'arr': [0, 0, 2, 2], 'ans': [0, 0, 0, 4]},
+            {'arr': [0, 2, 2, 0], 'ans': [0, 0, 4, 0]},
+            {'arr': [2, 2, 0, 0], 'ans': [0, 4, 0, 0]},
+
+            /* double combines */
+            {'arr': [2, 2, 2, 2], 'ans': [0, 4, 0, 4]},
+            {'arr': [2, 2, 4, 4], 'ans': [0, 4, 0, 8]},
+            {'arr': [128, 128, 128, 128], 'ans': [0, 256, 0, 256]}
+        ]
+
+        for (const i in testTuples) {
+            const test = testTuples[i]
+
+            const testCase = test['arr']
+            const expectedResult = test['ans']
+            const combineResult = this.#combineAdjacentCells(testCase)
+
+            if (PRINT_TESTS) {
+                console.log(`${i.padStart(3, '0')}.combine🌟 [${testCase}]→[${expectedResult}] ?= [${combineResult}]`)
+            }
+
+            console.assert(
+                this.#arrayEquals(combineResult, expectedResult)
+            )
+        }
+    }
 
     slideTiles(direction) {}
     spawnRandom2() {}

@@ -36,7 +36,7 @@ function setup() {
     const board = new Gameboard()
     board.runConsecutiveZeroesTests()
     board.runSlideRightTests()
-    console.log(board.slideRight([2, 0, 0, 0]))
+    board.runCombineAdjacentTests()
 }
 
 
