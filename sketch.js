@@ -30,6 +30,10 @@ function setup() {
     instructions.html(`<pre>🥝 2️⃣0️⃣4️⃣8️⃣ → [num1] freeze sketch</pre>`)
 
     debugCorner = new CanvasDebugCorner(5)
+
+    const board = new Gameboard()
+
+    board.runConsecutiveZeroesTest()
 }
 
 
