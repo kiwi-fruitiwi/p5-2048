@@ -14,6 +14,8 @@ let debugCorner /* output debug text in the bottom left corner of the canvas */
 
 let grid /* 4x4 game grid for 2048 */
 
+const PRINT_TESTS = true
+
 function preload() {
     font = loadFont('data/consola.ttf')
 }
@@ -32,8 +34,9 @@ function setup() {
     debugCorner = new CanvasDebugCorner(5)
 
     const board = new Gameboard()
-
-    board.runConsecutiveZeroesTest()
+    board.runConsecutiveZeroesTests()
+    board.runSlideRightTests()
+    console.log(board.slideRight([2, 0, 0, 0]))
 }
 
 
