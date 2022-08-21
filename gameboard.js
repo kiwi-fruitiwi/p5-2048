@@ -213,6 +213,50 @@ class Gameboard {
         }
     }
 
+    /** use slideRight, combineAdjacentCells, and slideRight to complete a
+        single move in the RIGHT direction
+        @returns: a new 4-cell array containing the game state of one row
+            after slideRight, combine, slideRight
+     */
+    #makeMoveRight(row) {
+        return this.#slideRight(this.#combineAdjacentCells(this.#slideRight(row)))
+    }
+
+    runMakeMoveRightTests() {
+        const testTuples = [
+            {'arr': [0, 0, 0, 0], 'ans': [0, 0, 0, 0]},
+
+            /* basic */
+            {'arr': [0, 0, 2, 2], 'ans': [0, 0, 0, 4]},
+
+            /*  */
+            {'arr': [0, 2, 2, 2], 'ans': [0, 0, 2, 4]},
+            {'arr': [2, 2, 2, 0], 'ans': [0, 0, 2, 4]},
+
+            /*  */
+            {'arr': [0, 2, 2, 0], 'ans': [0, 0, 0, 4]},
+            {'arr': [2, 2, 2, 2], 'ans': [0, 0, 4, 4]},
+            {'arr': [0, 4, 0, 4], 'ans': [0, 0, 0, 8]},
+            {'arr': [16, 0, 16, 0], 'ans': [0, 0, 0, 32]}
+        ]
+
+        for (const i in testTuples) {
+            const test = testTuples[i]
+
+            const testCase = test['arr']
+            const expectedResult = test['ans']
+            const combineResult = this.#makeMoveRight(testCase)
+
+            if (PRINT_TESTS) {
+                console.log(`${i.padStart(3, '0')}.moveR➡️ [${testCase}]→[${expectedResult}] ?= [${combineResult}]`)
+            }
+
+            console.assert(
+                this.#arrayEquals(combineResult, expectedResult)
+            )
+        }
+    }
+
     slideTiles(direction) {}
     spawnRandom2() {}
     rotateBoardCW() {}
