@@ -37,7 +37,7 @@ function setup() {
     board.runConsecutiveZeroesTests()
     board.runSlideRightTests()
     board.runCombineAdjacentTests()
-    board.runMakeMoveRightTests()
+    board.runMoveRightTests()
 }
 
 

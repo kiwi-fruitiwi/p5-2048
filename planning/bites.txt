@@ -1,0 +1,37 @@
+
+
+
+
+
+
+
+
+
+🥏 [ completed ]
+    consecutiveZeroes
+        arrayEquals
+    slideRight
+    combineAdjacentCells
+        swap
+    moveRight ← slideR, combineAC, slideR
+
+🏭 [ implementing ]
+    moveLeft
+        horizontalMirror
+
+🥝 [ features ]
+    moveUp
+        rotateCW
+
+        rotateCCW ← undoTransform
+    moveDown
+
+    move(DIRECTION)
+        perform correct transforms
+            moveRight
+            undo transforms
+
+    spawnRandom2
+    renderGrid
+    score counter
+    game over detection

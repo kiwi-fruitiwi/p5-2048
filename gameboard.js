@@ -81,7 +81,7 @@ class Gameboard {
             const zeroesResult = this.getConsecutiveZeroesToTheRight(index, testCase)
 
             if (PRINT_TESTS) {
-                console.log(`${i.padStart(3, '0')}.zeroes🥝 [${testCase}]→[${expectedResult}] ?= [${zeroesResult}]`)
+                console.log(`${i.padStart(2, '0')}.zeroes🥝 [${testCase}]→[${expectedResult}] ?= [${zeroesResult}]`)
             }
 
             console.assert(zeroesResult === expectedResult)
@@ -149,7 +149,7 @@ class Gameboard {
             const slideResult = this.#slideRight(testCase)
 
             if (PRINT_TESTS) {
-                console.log(`${i.padStart(3, '0')}.slide→🌊 [${testCase}]→[${expectedResult}] ?= [${slideResult}]`)
+                console.log(`${i.padStart(2, '0')}.slide→🎚️ [${testCase}]→[${expectedResult}] ?= [${slideResult}]`)
             }
 
             console.assert(
@@ -204,7 +204,7 @@ class Gameboard {
             const combineResult = this.#combineAdjacentCells(testCase)
 
             if (PRINT_TESTS) {
-                console.log(`${i.padStart(3, '0')}.combine🌟 [${testCase}]→[${expectedResult}] ?= [${combineResult}]`)
+                console.log(`${i.padStart(2, '0')}.combine🌟 [${testCase}]→[${expectedResult}] ?= [${combineResult}]`)
             }
 
             console.assert(
@@ -218,11 +218,11 @@ class Gameboard {
         @returns: a new 4-cell array containing the game state of one row
             after slideRight, combine, slideRight
      */
-    #makeMoveRight(row) {
+    #executeMoveRight(row) {
         return this.#slideRight(this.#combineAdjacentCells(this.#slideRight(row)))
     }
 
-    runMakeMoveRightTests() {
+    runMoveRightTests() {
         const testTuples = [
             {'arr': [0, 0, 0, 0], 'ans': [0, 0, 0, 0]},
 
@@ -245,10 +245,10 @@ class Gameboard {
 
             const testCase = test['arr']
             const expectedResult = test['ans']
-            const combineResult = this.#makeMoveRight(testCase)
+            const combineResult = this.#executeMoveRight(testCase)
 
             if (PRINT_TESTS) {
-                console.log(`${i.padStart(3, '0')}.moveR➡️ [${testCase}]→[${expectedResult}] ?= [${combineResult}]`)
+                console.log(`${i.padStart(2, '0')}.moveR🌊 [${testCase}]→[${expectedResult}] ?= [${combineResult}]`)
             }
 
             console.assert(
